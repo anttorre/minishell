@@ -36,19 +36,42 @@ tgoto, tputs -->
 
 ##RL_REPLACE_LINE
 **Prototipo:** *void rl_replace_line (const char * text, int clear_undo)*
-**Definición:**
+**Definición:** reemplaza el contenido de rl_line_buffer con texto si clear_undo no es cero, la lista de deshacer asociada de la linea actual se borra.
 
-##
-**Prototipo:** **
-**Definición:**
+##RL_REDISPLAY
+**Prototipo:** *void rl_redisplay(void)*
+**Definición:** cambia lo que hay puesto en pantalla para reflejar el contenido actual de rl_line_buffer
 
-##
-**Prototipo:** **
-**Definición:**
+##ADD_HISTORY
+**Prototipo:** *void add_history(const char * line)*
+**Definición:** añade al historico la linea que se ha leido con readline
 
-##
-**Prototipo:** **
-**Definición:**
+##WAITPID
+**Prototipo:** *pid_t waitpid(pid_t pid, int * _Nullable wstatus, int options)*
+**Definición:** llamada al sistema que suspende la ejecucion de la llamada al proceso hasta que un proceso hijo especificado en el argumento pid cambia su estado
+
+	El valor del pid puede ser:
+    1) < -1   espera por procesos hijos cuyo ID group es igual al valor absoluto del pid.
+   	2) -1     espera por cualquier proceso hijo.
+    3) 0      espera por cualquier proceso hijo cuyo ID de grupo de procesos sea igual al del proceso que hace la llamada en ese momento.
+    4) > 0    meaning wait for the child whose process ID is equal to the value of pid.
+
+	Los valores van seguido de un OR con estas constantes:
+	1) WNOHANG
+	retorna inmediatamente si ningun hijo ha hecho exit.
+	2) WUNTRACED
+  	también devuelve si un hijo se ha detenido (pero no ha sido rastreado mediante ptrace(2)).  El estado de los hijos rastreados que se han detenido se proporciona incluso si no se especifica esta opción.
+    3) WCONTINUED
+	también devuelve si un hijo detenido ha sido reanudado por la entrega de SIGCONT.
+
+#####EQUIVALENCIAS
+	WAIT
+	waitpid (-1, &wstatus, 0);
+	WAIT3
+	waitpid(-1, status, options);
+	WAIT4
+	waitpid(pid, status, options);
+
 
 ##
 **Prototipo:** **
