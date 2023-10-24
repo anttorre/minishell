@@ -73,35 +73,35 @@ tgoto, tputs -->
 	waitpid(pid, status, options);
 
 
-##
+##SIGNAL
+**Prototipo:** *sighandler_t signal(int signum, sighandler_t handler);*
+**Definición:** manda señales a los procesos
+
+##SIGACTION
+**Prototipo:** *int sigaction(int signum, const struct sigaction *_Nullable restrict act, struct sigaction *_Nullable restrict oldact);*
+**Definición:** Examina y cambia una señal
+
+##KILL
+**Prototipo:** *int kill(pid_t pid, int sig)*
+**Definición:** envia una señal a un proceso
+
+##GETCWD
+**Prototipo:** *char *getcwd(char buf[.size], size_t size)*
+**Definición:** coge el directorio de trabajo actual
+
+##CHDIR
+**Prototipo:** *int chdir(const char *path)*
+**Definición:** cambia el directorio actual de trabajo a un directorio especificado en el path.
+
+##STAT
+**Prototipo:** *int stat(const char *path, struct stat *buf)*
+**Definición:**
+
+##LSTAT
 **Prototipo:** **
 **Definición:**
 
-##
-**Prototipo:** **
-**Definición:**
-
-##
-**Prototipo:** **
-**Definición:**
-
-##
-**Prototipo:** **
-**Definición:**
-
-##
-**Prototipo:** **
-**Definición:**
-
-##
-**Prototipo:** **
-**Definición:**
-
-##
-**Prototipo:** **
-**Definición:**
-
-##
+##FSTAT
 **Prototipo:** **
 **Definición:**
 
