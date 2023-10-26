@@ -57,7 +57,9 @@ tgoto, tputs -->
 **Prototipo:** *pid_t waitpid(pid_t pid, int * _Nullable wstatus, int options)*
 **Definición:** llamada al sistema que suspende la ejecucion de la llamada al proceso hasta que un proceso hijo especificado en el argumento pid cambia su estado
 
-	El valor del pid puede ser:
+	El valor del pid puede ser:ioctl, getenv, tcsetattr,
+tcgetattr, tgetent, tgetflag, tgetnum, tgetstr,
+tgoto, tputs
     1) < -1   espera por procesos hijos cuyo ID group es igual al valor absoluto del pid.
    	2) -1     espera por cualquier proceso hijo.
     3) 0      espera por cualquier proceso hijo cuyo ID de grupo de procesos sea igual al del proceso que hace la llamada en ese momento.
@@ -139,22 +141,77 @@ tgoto, tputs -->
 
 ##CLOSEDIR
 
-**Prototipo:** **
-**Definición:**
+**Prototipo:** *int closedir(DIR *dir)*
+**Definición:** Cierra el directorio que se le pasa por parametro devuelve un entero. 
 
-##
+##ISATTY
 
-**Prototipo:** **
-**Definición:**
+**Prototipo:** *int isatty(int fd)*
+**Definición:** Para determinar si un descriptor de archivo está asociado con un terminal interactivo. Retorna un valor distinto de cero si el descriptor de archivo es un terminal, y retorna 0 si no lo es. Esta función es útil para realizar acciones específicas dependiendo de si la entrada o salida estándar está redirigida a un archivo o si se está interactuando directamente con un terminal.
 
-##
-**Prototipo:** **
-**Definición:**
+##TTYNAME
 
-##
-**Prototipo:** **
-**Definición:**
+**Prototipo:** *char *ttyname(int fd)*
+**Definición:** Para obtener el nombre del terminal asociado con un descriptor de archivo específico. Recibe como argumento el descriptor de archivo  fd  y devuelve un puntero a una cadena de caracteres que representa el nombre del terminal. Si el descriptor de archivo no está asociado con un terminal, la función devuelve NULL. 
 
-##
-**Prototipo:** **
+##TTYSLOT
+
+**Prototipo:** *int ttyslot(void)*
+**Definición:** La función ttyslot devuelve un entero que representa el número de la ranura del terminal asociado al proceso. Este número se utiliza para identificar el terminal en el sistema. 
+
+##IOCTL
+**Prototipo:** *int ioctl(int fd, unsigned long request, ...)*
+**Definición:** La función ioctl se utiliza para controlar y manipular dispositivos y archivos especiales en sistemas UNIX. Permite enviar comandos y recibir información específica del dispositivo o archivo asociado.
+
+##GETENV
+
+**Prototipo:** *char * getenv(const char * name)*
+**Definición:** La función getenv se utiliza para obtener el valor de una variable de entorno específica en un programa. Recibe como argumento el nombre de la variable de entorno que se desea obtener y devuelve un puntero a una cadena de caracteres que contiene el valor de la variable.
+
+##TCSETATTR
+
+**Prototipo:** *int tcsetattr(int fd, int optional_actions, const struct termios * termios_p)*
+**Definición:** Se utiliza para establecer los parámetros de configuración de un terminal. Recibe como argumentos el descriptor de archivo del terminal, las acciones opcionales que se desean realizar y una estructura termios que contiene los parámetros de configuración. 
+
+- TCSANOW: los cambios se aplican inmediatamente. 
+- TCSADRAIN: los cambios se aplican después de que se hayan transmitido todos los datos pendientes de enviar. 
+- TCSAFLUSH: los cambios se aplican después de que se hayan transmitido todos los datos pendientes de enviar y se hayan descartado todos los datos pendientes de recibir. 
+
+##TCGETATTR
+
+**Prototipo:** *int tcgetattr(int fd, struct termios * termios_p)*
+**Definición:** Para obtener los parámetros de configuración actuales de un terminal. Recibe como argumento el descriptor de archivo del terminal y un puntero a una estructura termios donde se almacenarán los parámetros obtenidos. 
+
+##TGETENT
+
+**Prototipo:** *int tgetent(char * bp, const char * name)*
 **Definición:**
+ En el manejo de la biblioteca terminfo para obtener las capacidades y características de un terminal específico. Recibe como argumento un puntero a un búfer de caracteres y el nombre del archivo de descripción del terminal. 
+
+##TGETFLAG
+
+**Prototipo:** *int tgetflag(const char * capname)*
+**Definición:**
+ Se utiliza en la biblioteca terminfo para obtener el valor de una bandera (flag) específica del terminal. Recibe como argumento el nombre de la bandera que se desea obtener.
+
+##TGETNUM
+
+**Prototipo:** *int tgetnum(const char * capname)*
+**Definición:**
+ Se utiliza en la biblioteca terminfo para obtener el valor numérico de una capacidad específica del terminal. Recibe como argumento el nombre de la capacidad que se desea obtener. 
+
+##TGETSTR
+
+**Prototipo:** *char *tgetstr(const char * capname, char ** area)*
+**Definición:**
+ Se utiliza en la biblioteca terminfo para obtener una secuencia de escape específica del terminal. Recibe como argumento el nombre de la capacidad que se desea obtener y un puntero a un área de memoria donde se almacenará la secuencia de escape. 
+
+##TGOTO
+
+**Prototipo:** *char * tgoto(const char * capname, int col, int row)*
+**Definición:**
+ Se utiliza en la biblioteca terminfo para generar una secuencia de escape que mueve el cursor a una posición específica en el terminal. Recibe como argumentos el nombre de la capacidad que se desea utilizar, la columna y la fila a la que se desea mover el cursor.
+
+##TPUTS
+**Prototipo:** *int tputs(const char * str, int affcnt, int (* putc)(int))*
+**Definición:** Se utiliza en la biblioteca terminfo para enviar una secuencia de escape al terminal. Recibe como argumentos una cadena de caracteres que representa la secuencia de escape, un contador de afectación y una función que se utiliza para enviar caracteres al terminal. 
