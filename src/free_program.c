@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_program.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 15:32:55 by anttorre          #+#    #+#             */
-/*   Updated: 2023/10/30 12:44:10 by anttorre         ###   ########.fr       */
+/*   Created: 2023/10/30 12:32:55 by anttorre          #+#    #+#             */
+/*   Updated: 2023/10/30 12:43:23 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	minishell(char **env, t_data *d);
-
-void	leaks(void)
+void	free_all(t_data *d)
 {
-	system("leaks -q minishell");
-}
+	char	**ini;
 
-static int	minishell(char **env, t_data *d)
-{
-	get_env_paths(env, d);
-	return (EXIT_SUCCESS);
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	t_data	*data;
-
-	atexit(&leaks);
-	(void) argv;
-	(void) argc;
-	data = ft_calloc(1, sizeof(t_data));
-	if (!data)
-		return (EXIT_FAILURE);
-	minishell(env, data);
-	return (free_all(data), EXIT_SUCCESS);
+	if (d->env)
+	{
+		ini = d->env;
+		while (*d->env)
+			free(*d->env++);
+		free(ini);
+	}
+	free(d);
 }

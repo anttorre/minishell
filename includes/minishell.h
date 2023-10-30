@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:02:22 by anttorre          #+#    #+#             */
-/*   Updated: 2023/10/19 15:37:54 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/10/30 12:36:48 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_data
+{
+	char	**env;
+}	t_data;
 
+void	free_all(t_data *d);
+int		get_env_paths(char **env, t_data *d);
 
 #endif
