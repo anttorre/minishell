@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
+/*   By: anttorre <anttorre@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:56:26 by anttorre          #+#    #+#             */
-/*   Updated: 2023/10/30 12:31:36 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:07:20 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ int	get_env_paths(char **env, t_data *d)
 	d->env = ft_split(*env, ':');
 	if (!d->env)
 		return (EXIT_FAILURE);
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
