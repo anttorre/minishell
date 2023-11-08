@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:56:26 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/03 14:59:16 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:01:10 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,31 @@ int	get_env_paths(char **env, t_data *d)
 	return (EXIT_SUCCESS);
 }
 
-void	prompt(char *line, t_data *d)
+int	prompt(char **line, t_data *d)
 {
 	char	cur_dir[500];
-	char	*tmp;
-	char	*tmp1;
-	char	*shell;
 	char	**dir;
 
 	dir = ft_split(getcwd(cur_dir, sizeof(cur_dir)), '/');
 	if (!dir)
-		return ;
+		return (free_dir(dir), EXIT_FAILURE);
 	while (dir[d->i])
 		d->i++;
-	tmp = ft_strjoin(BLUE_T, dir[d->i - 1]);
-	tmp1 = ft_strjoin(YELLOW_T, "minishell@");
-	shell = ft_strjoin(tmp1, tmp);
-	if (!tmp || !tmp1 || !shell)
-		return ;
-	free(tmp1);
-	free(tmp);
-	shell = ft_strjoin(shell, RESET_COLOR " > ");
-	if (!shell)
-		return ;
-	line = readline(shell);
+	d->tmp = ft_strjoin(YELLOW_T, dir[d->i - 1]);
+	free_dir(dir);
+	d->tmp1 = ft_strjoin(BLUE_T, "minishell@");
+	d->shell = ft_strjoin(d->tmp1, d->tmp);
+	if (!d->tmp || !d->tmp1 || !d->shell)
+		return (free(d->tmp), free(d->tmp1), free(d->shell), 1);
+	free(d->tmp1);
+	free(d->tmp);
+	d->tmp = ft_strjoin(d->shell, RESET_COLOR "\x1b[1;31m ▸ \x1b[0m");
+	if (!d->tmp)
+		return (free(d->shell), EXIT_FAILURE);
+	free(d->shell);
+	*line = readline(d->tmp);
+	free(d->tmp);
+	if (!*line)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

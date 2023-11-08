@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 12:32:55 by anttorre          #+#    #+#             */
-/*   Updated: 2023/10/30 12:43:23 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/06 12:47:22 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,17 @@ void	free_all(t_data *d)
 		free(ini);
 	}
 	free(d);
+}
+
+void	free_dir(char **dir)
+{
+	int	i;
+
+	i = -1;
+	if (dir)
+	{
+		while (dir[++i])
+			free(dir[i]);
+		free(dir);
+	}
 }
