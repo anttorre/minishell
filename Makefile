@@ -30,7 +30,8 @@ INCLUDES = -lreadline
 
 LIB = ar rcs
 
-SRCS = src/main.c src/minishell_utils.c src/free_program.c src/init_struct.c
+SRCS =  src/main.c src/minishell_utils.c src/free_program.c src/init_struct.c \
+		src/split_quotes_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

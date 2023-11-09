@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:02:22 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/07 15:00:23 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:31:11 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 typedef struct s_data
 {
 	char	**env;
+	char	**cmds;
 	char	*tmp;
 	char	*tmp1;
 	char	*shell;
@@ -48,5 +49,9 @@ void	free_dir(char **dir);
 int		get_env_paths(char **env, t_data *d);
 int		prompt(char **line, t_data *d);
 void	init_struct(t_data *d);
+char	**split_loop(char *s, char d);
+char	**ft_split_quotes(char *str, char d);
+void	free_split_quotes(char **arr);
+void	process_input(char *input, t_data *d);
 
 #endif

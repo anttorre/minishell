@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:32:55 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/07 15:52:43 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:29:38 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	minishell(char **env, t_data *d)
 		if (prompt(&line, d) == EXIT_FAILURE)
 			return (free(line), EXIT_FAILURE);
 		add_history(line);
+		process_input(line, d);
 		free(line);
 	}
 	clear_history();
