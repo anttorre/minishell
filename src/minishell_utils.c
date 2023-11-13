@@ -6,17 +6,17 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:56:26 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/09 13:03:14 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:53:17 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	**ft_split_quotes(char *str, char d)
+char	**ft_split_quotes(char *str, char d, t_data *data)
 {
 	char	**arr;
 
-	arr = split_loop(str, d);
+	arr = split_loop(str, d, data);
 	if (!arr)
 		return (free_split_quotes(arr), NULL);
 	return (arr);
@@ -63,13 +63,50 @@ int	prompt(char **line, t_data *d)
 	free(d->tmp);
 	if (!*line)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (d->i = 0, EXIT_SUCCESS);
+}
+
+void	count_pipe_dotcoma(t_data *d, char *s)
+{
+	int		flag_quote;
+	char	aux;
+	char	aux2;
+
+	aux = '\'';
+	aux2 = '\"';
+	while (*s)
+	{
+		while ((*s != aux && *s != aux2 && flag_quote) || (!flag_quote && *s))
+		{
+			while ((*s == '\'' || *s == '\"') && *s != '\0')
+			{
+				if (*s == '\'' || *s == '\"')
+				{
+					flag_quote = !flag_quote;
+				}
+				s++;
+			}
+			if (!flag_quote)
+			{
+				if (*s == '|')
+				{
+					d->f_pipe = 1;
+					d->c_pipe++;
+				}
+				if (*s == ';')
+				{
+					d->f_dotcoma = 1;
+					d->c_dotcoma++;
+				}
+			}
+			s++;
+		}
+	}
 }
 
 void	process_input(char *input, t_data *d)
 {
-	d->cmds = ft_split_quotes(input, ' ');
-	d->i = 0;
-	while (d->cmds[d->i])
-		printf("%s\n", d->cmds[d->i++]);
+	count_pipe_dotcoma(d, input);
+	printf("contador coma: %d\ncontador pipes: %d\nflag coma: %d\nflag pipe: %d\n", d->c_dotcoma, d->c_pipe, d->f_dotcoma, d->f_pipe);
+	//d->cmds = ft_split_quotes(input, ' ', d);
 }

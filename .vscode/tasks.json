@@ -7,9 +7,9 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-				"../libft/libft.a",
+                "../libft/libft.a",
                 "../src/*.c",
-				"-lreadline",
+                "-lreadline",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],

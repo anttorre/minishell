@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 12:21:43 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/09 15:14:20 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:15:03 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	free_split_quotes(char **arr)
 
 static void	iterator_quotes(char **str, char d, char *aux, int *flag_quote)
 {
+	if (**str == '|' || **str == ';')
+		(*str)++;
 	while ((**str == d || **str == '\'' || **str == '\"') && **str != '\0')
 	{
 		if (**str == '\'' || **str == '\"')
@@ -48,6 +50,8 @@ size_t	words_count(char *str, char d)
 	flag_quote = 0;
 	while (*str)
 	{
+		if (*str == '|' || *str == ';')
+			str++;
 		iterator_quotes(&str, d, &aux, &flag_quote);
 		if (*str != '\'' && *str != '\"' && *str != d)
 			count++;
@@ -55,7 +59,7 @@ size_t	words_count(char *str, char d)
 			while (*str != aux && *str)
 				str++;
 		else
-			while (*str != d && *str)
+			while (*str != d && *str && *str != '|')
 				str++;
 	}
 	return (count);
@@ -79,7 +83,7 @@ int	word_length(char *str, char d, int flag, char c)
 	}
 	else
 	{
-		while (*str != d && *str)
+		while (*str != d && *str && *str != '|' && *str != ';')
 		{
 			flag_quote[1]++;
 			str++;
@@ -88,15 +92,14 @@ int	word_length(char *str, char d, int flag, char c)
 	return (flag_quote[1]);
 }
 
-char	**split_loop(char *s, char d)
+char	**split_loop(char *s, char d, t_data *data)
 {
 	char	**new_str;
-	int		i;
 	int		flag_quote;
 	char	aux;
 	int		wl;
 
-	i = -1;
+	data->i = -1;
 	flag_quote = 0;
 	new_str = ft_calloc(words_count(s, d) + 1, sizeof(char *));
 	if (!new_str)
@@ -104,15 +107,16 @@ char	**split_loop(char *s, char d)
 	while (*s)
 	{
 		iterator_quotes(&s, d, &aux, &flag_quote);
-		while ((*s != aux && flag_quote) || (*s != d && !flag_quote && *s))
+		while ((*s != aux && flag_quote)
+			|| (*s != d && !flag_quote && *s && *s != '|' && *s != ';'))
 		{
 			wl = word_length(s, d, flag_quote, aux);
-			new_str[++i] = ft_calloc(wl + 1, sizeof(char));
-			if (!new_str[i])
+			new_str[++data->i] = ft_calloc(wl + 1, sizeof(char));
+			if (!new_str[data->i])
 				return (free_split_quotes(new_str), NULL);
-			ft_strlcpy(new_str[i], s, wl + 1);
+			ft_strlcpy(new_str[data->i], s, wl + 1);
 			s += wl;
 		}
 	}
-	return (new_str[++i] = NULL, new_str);
+	return (new_str[++data->i] = NULL, data->i = 0, new_str);
 }
