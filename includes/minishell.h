@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:02:22 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/13 16:31:33 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:47:11 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ typedef struct s_data
 	int		i;
 	int		f_pipe;
 	int		f_dotcoma;
+	int		f_redir;
+	int		f_append;
+	int		c_append;
+	int		c_redir;
 	int		c_dotcoma;
 	int		c_pipe;
 }	t_data;
@@ -57,6 +61,6 @@ char	**split_loop(char *s, char d, t_data *data);
 char	**ft_split_quotes(char *str, char d, t_data *data);
 void	free_split_quotes(char **arr);
 void	process_input(char *input, t_data *d);
-void	count_pipe_dotcoma(t_data *d, char *s);
+void	count_lex(t_data *d, char *s);
 
 #endif

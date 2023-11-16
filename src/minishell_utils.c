@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:56:26 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/13 16:53:17 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:56:54 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	prompt(char **line, t_data *d)
 	return (d->i = 0, EXIT_SUCCESS);
 }
 
-void	count_pipe_dotcoma(t_data *d, char *s)
+void	count_lex(t_data *d, char *s)
 {
 	int		flag_quote;
 	char	aux;
@@ -98,15 +98,25 @@ void	count_pipe_dotcoma(t_data *d, char *s)
 					d->f_dotcoma = 1;
 					d->c_dotcoma++;
 				}
+				if (*s == '>')
+				{
+					d->f_redir = 1;
+					d->c_redir++;
+				}
+				if (*s == '>' && *(s + 1) == '>')
+				{
+					d->f_append = 1;
+					d->c_append++;
+				}
 			}
 			s++;
 		}
+		s++;
 	}
 }
 
 void	process_input(char *input, t_data *d)
 {
-	count_pipe_dotcoma(d, input);
-	printf("contador coma: %d\ncontador pipes: %d\nflag coma: %d\nflag pipe: %d\n", d->c_dotcoma, d->c_pipe, d->f_dotcoma, d->f_pipe);
-	//d->cmds = ft_split_quotes(input, ' ', d);
+	count_lex(d, input);
 }
+//b | c ；d 'pepe|;pepa' >
