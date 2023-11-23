@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:36:56 by anttorre          #+#    #+#             */
-/*   Updated: 2023/06/06 12:55:49 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:51:25 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 	size_t	size;
 
+	if (!s1)
+		return ("");
 	size = ft_strlen(s1) + 1;
 	s2 = malloc(size);
 	i = 0;

@@ -6,32 +6,40 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:32:55 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/13 15:32:51 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:39:07 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	minishell(char **env, t_data *d);
-
-static int	minishell(char **env, t_data *d)
+void	process_input(char *input, t_data *d, char **env)
 {
-	char	*line;
+	(void) env;
+	count_lex(d, input);
+	char **c = ft_split(input, ' ');
+	if (!ft_strncmp(c[0], "env", 3))
+		exec_env(d);
+	if (!ft_strncmp(c[0], "unset", 5))
+		exec_unset(d, c[1]);
+}
 
-	line = NULL;
+int	minishell(char **env, t_data *d)
+{
+	d->line = NULL;
 	if (get_env_paths(env, d) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	start_env(d, env);
 	while (1)
 	{
-		if (prompt(&line, d) == EXIT_FAILURE)
-			return (free(line), EXIT_FAILURE);
-		add_history(line);
-		process_input(line, d);
-		free(line);
+		if (prompt(&d->line, d) == EXIT_FAILURE)
+			return (free(d->line), EXIT_FAILURE);
+		add_history(d->line);
+		process_input(d->line, d, env);
+		free(d->line);
 	}
 	clear_history();
-	if (line)
-		free(line);
+	if (d->line)
+		free(d->line);
 	return (EXIT_SUCCESS);
 }
 

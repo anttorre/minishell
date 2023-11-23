@@ -9,6 +9,7 @@
                 "-g",
                 "../libft/libft.a",
                 "../src/*.c",
+                "../src/builtins/*.c",
                 "-lreadline",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"

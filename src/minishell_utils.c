@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:56:26 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/15 17:56:54 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:56:13 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ char	**ft_split_quotes(char *str, char d, t_data *data)
 
 int	get_env_paths(char **env, t_data *d)
 {
-	while (env)
+	int	i;
+
+	i = -1;
+	while (env[++i])
 	{
-		if (!ft_strncmp("PATH", *env, 4))
+		if (!ft_strncmp("PATH", env[i], 4))
 			break ;
-		env++;
 	}
-	*env += 5;
-	d->env = ft_split(*env, ':');
+	d->env = ft_split(env[i] + 5, ':');
 	if (!d->env)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -76,7 +77,7 @@ void	count_lex(t_data *d, char *s)
 	aux2 = '\"';
 	while (*s)
 	{
-		while ((*s != aux && *s != aux2 && flag_quote) || (!flag_quote && *s))
+		while (((*s == aux || *s == aux2) && flag_quote) || (!flag_quote && *s))
 		{
 			while ((*s == '\'' || *s == '\"') && *s != '\0')
 			{
@@ -93,12 +94,7 @@ void	count_lex(t_data *d, char *s)
 					d->f_pipe = 1;
 					d->c_pipe++;
 				}
-				if (*s == ';')
-				{
-					d->f_dotcoma = 1;
-					d->c_dotcoma++;
-				}
-				if (*s == '>')
+				if (*s == '>' && *(s + 1) != '>')
 				{
 					d->f_redir = 1;
 					d->c_redir++;
@@ -107,6 +103,7 @@ void	count_lex(t_data *d, char *s)
 				{
 					d->f_append = 1;
 					d->c_append++;
+					s++;
 				}
 			}
 			s++;
@@ -115,8 +112,5 @@ void	count_lex(t_data *d, char *s)
 	}
 }
 
-void	process_input(char *input, t_data *d)
-{
-	count_lex(d, input);
-}
-//b | c ；d 'pepe|;pepa' >
+
+//ls -l datos | b > p | c 'e;|o' | d >> p
