@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 13:02:22 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/23 15:32:57 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:23:53 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				index;
 	struct s_env	*next;
 }			t_env;
 
@@ -50,6 +51,7 @@ typedef struct s_data
 	char	*tmp1;
 	char	*shell;
 	int		i;
+	int		j;
 	int		f_pipe;
 	int		f_redir;
 	int		f_append;
@@ -58,6 +60,8 @@ typedef struct s_data
 	int		c_pipe;
 	t_env	*envp;
 	t_env	*aux;
+	t_env	*export;
+	int		flag_node;
 }			t_data;
 
 void		free_all(t_data *d);
@@ -78,5 +82,13 @@ void		exec_echo(char **s);
 void		start_env(t_data *d, char **env);
 void		exec_env(t_data *d);
 void		exec_unset(t_data *d, char *key);
+void		exec_export(char **s, t_data *d);
+void		set_index_export(t_data *d);
+void		lst_addenv_back(t_env **lst, t_env *new, char **tmp);
+int			lstsize_env(t_env *lst);
+int			add_vars(char *s, t_data *d);
+void		lst_addexport_back(t_env **lst, t_env *new, char **tmp);
+void		free_tmp(char **tmp);
+void		restart_index(t_env	**lst);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 11:56:26 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/23 12:56:13 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:49:06 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,5 @@ void	count_lex(t_data *d, char *s)
 		s++;
 	}
 }
-
 
 //ls -l datos | b > p | c 'e;|o' | d >> p

@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 14:41:32 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/23 16:30:16 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/28 16:23:38 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exec_env(t_data *d)
 	head = d->envp;
 	while (head)
 	{
-		printf("%s%s\n", head->key, head->value);
+		printf("%s%s %d\n", head->key, head->value, head->index);
 		head = head->next;
 	}
 }
@@ -87,7 +87,41 @@ void	exec_unset(t_data *d, char *key)
 	}
 }
 
-void	exec_export(t_data *d)
+void	exec_export(char **s, t_data *d)
 {
-	
+	t_env	*head;
+	t_env	*new;
+	int		i;
+
+	set_index_export(d);
+	head = d->envp;
+	i = 1;
+	if (!ft_strncmp(s[0], "export", 6) && !s[1])
+	{
+		while (i <= lstsize_env(d->envp))
+		{
+			while (head)
+			{
+				if (head->index == i)
+				{
+					printf("declare -x %s%s index: %d\n", head->key, head->value, head->index);
+					head = d->envp;
+					break ;
+				}
+				head = head->next;
+			}
+			i++;
+		}
+	}
+	else
+	{
+		new = d->export;
+		while (new)
+		{
+			if (!ft_strncmp(new->key, s[1], ft_strlen(new->key)))
+				d->aux = new;
+			new = new->next;
+		}
+		lst_addexport_back(&d->envp, d->aux, NULL);
+	}
 }

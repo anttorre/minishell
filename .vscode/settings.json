@@ -2,5 +2,6 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"__node_handle": "c"
-	}
+	},
+	"editor.inlineSuggest.showToolbar": "always"
 }

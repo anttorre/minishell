@@ -6,7 +6,7 @@
 /*   By: anttorre <atormora@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 15:32:55 by anttorre          #+#    #+#             */
-/*   Updated: 2023/11/23 15:39:07 by anttorre         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:50:52 by anttorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 void	process_input(char *input, t_data *d, char **env)
 {
-	(void) env;
 	count_lex(d, input);
+	if (!d->f_pipe)
+		add_vars(input, d);
 	char **c = ft_split(input, ' ');
 	if (!ft_strncmp(c[0], "env", 3))
 		exec_env(d);
 	if (!ft_strncmp(c[0], "unset", 5))
 		exec_unset(d, c[1]);
+	if (!ft_strncmp(c[0], "clear", 5))
+		exec_cmd("/usr/bin/clear", c, env);
+	if (!ft_strncmp(c[0], "export", 6))
+		exec_export(c, d);
 }
 
 int	minishell(char **env, t_data *d)
