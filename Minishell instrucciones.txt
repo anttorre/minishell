@@ -1,0 +1,25 @@
+Minishell
+- Crear una terminal, mostrar en pantalla una entrada (mensajito) siempre disponible (bucle infinito) que este leyendo lo que se escribe
+- Tener un historial funcional (se hace con una funcion que ya existe muy sencillo)
+- Implementar las builtins (comandos que funcionan siempre aunque la variable PATH donde se guardan todas las rutas de los ejecutables, no exista):
+	* pwd (mostrar la ruta del directorio actual)
+	* echo con la opcion -n (mostrar en pantalla una cadena de texto y si tiene -n sin salto de linea)
+	* env (copiar la variable env que se pasa como parametro en la funcion main en otra tuya para luego mostrarla por pantalla)
+	* unset (eliminar de la lista env una variable de entorno)
+	* exit (salir de la terminal y terminar el programa)
+	* export con un nombre de variable (añade una nueva variable a env y si se pone el mismo nombre de variable lo que hace es actualizar la que existe en env) y export solo muestra por pantalla toda la lista ordenada por codigo ascii poniendo "declare -X" delante
+	* cd (cambiar de directorio tanto con ruta relativa como absoluta) relativa es ../../../directorio y absoluta /home/user/antonio/directorio
+- No interpretar si unas comillas no estan cerradas o caracteres como la barra invertida o el punto y coma que no se especifican en el enunciado.
+- Con la comilla simple evitar que interprete los metacaracteres (caracteres que la terminal interpreta de otra manera y no se puede interpretar si no poner como caracter literal si es un asterisco poner un asterisco)
+- Con la comilla doble hacer igual que con la simple con la excepcion de que si hay un $ seguido de un nombre de variable esta se expanda a su valor.
+- redirigir input con el signo < esto es que la entrada de datos provenga del fichero que se especidique despues del signo menor
+- redirigir output con el signo > esto es volcar a un fichero de texto los datos que se obtengan
+- << estos dos signos deben esperar un delimitador o no funciona que seria ejecutar here_doc de pipex
+- >> redirigir el output pero en modo append (que no sobreescriba el fichero si no que lo añada al final)
+- Implementar las multiples pipes (como en pipex)
+- Gestionar las variables de entorno (dolar seguido de un nombre por ejemplo $PATH que debera expandirse a lo que valga la variable que serian las rutas de los ejecutables)
+- Gestionar $? que muestra el codigo de estado de salida del ultimo comando ejecutado
+- Evitar usar mas de una variable global y buscar los ejecutables (comandos) segun la variable PATH
+- Ctrl-D cierra la terminal
+- Ctrl-C imprime una nueva entrada en una nueva línea
+- Ctrl-\ no hace nada
